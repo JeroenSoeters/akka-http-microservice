@@ -121,7 +121,7 @@
           <li><a href="#code/build.sbt" class="shortcut">build.sbt</a> and <a href="#code/project/plugins.sbt" class="shortcut">plugins.sbt</a> — the build scripts,</li>
           <li><a href="#code/src/main/resources/application.conf" class="shortcut">application.conf</a> — the seed configuration for our microservice, </li>
           <li><a href="#code/src/main/scala/AkkaHttpMicroservice.scala" class="shortcut">AkkaHttpMicroservice.scala</a> — our main Scala file.</li>
-          <li><a href="#code/src/test/scala/ServiceSpec.scala" class="shortcut">ServiceSpec.scala</a> — an example <code>akka-http</code> server test.</li>
+          <li><a href="#code/src/test/scala/unit.ServiceSpec.scala" class="shortcut">unit.ServiceSpec.scala</a> — an example <code>akka-http</code> server test.</li>
         </ul>
       </p>
       <p>The build scripts let SBT download all the dependencies for our project (including <code>akka-http</code>). They are described inside <a href="#tutorial/6"  class="shortcut">build scripts part</a> of the tutorial.</p>
@@ -315,14 +315,14 @@
     <div>
       <h2>Tests</h2>
       <p>
-        Check out <a href="#code/src/test/scala/ServiceSpec.scala" class="shortcut">simple tests that we prepared</a>
+        Check out <a href="#code/src/test/scala/unit.ServiceSpec.scala" class="shortcut">simple tests that we prepared</a>
         and don't forget to <a href="#test" class="shortcut">run them on your computer!</a>
       </p>
       <p>
         The interesting parts of the tests are:
         <ul>
           <li>the syntax of route checking,</li>
-          <li><a href="#code/src/test/scala/ServiceSpec.scala:19" class="shortcut">the way external requests are mocked</a>.</li>
+          <li><a href="#code/src/test/scala/unit.ServiceSpec.scala:19" class="shortcut">the way external requests are mocked</a>.</li>
         </ul>
       </p>
       <p>Next: <a href="#tutorial/13" class="shortcut">Tutorial summary</a>.</p>
