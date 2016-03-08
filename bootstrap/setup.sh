@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOOLS_ROOT=$HOME/Workspace/PandG_Tools
+TOOLS_ROOT=${1:-$HOME/xplanning/workspace/PandG_Tools}
 PANDG_RC=$HOME/.pandgrc
 JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/
 

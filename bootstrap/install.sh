@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOOLS_ROOT=$HOME/Workspace/PandG_Tools
+TOOLS_ROOT=${1:-$HOME/xplanning/workspace/PandG_Tools}
 MOUNT_POINT=./vol
 ASSETS=./assets
 
