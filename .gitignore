@@ -26,3 +26,6 @@ project/plugins/project/
 
 # IntelliJ specific
 .idea
+
+# Vagrant specific
+.vagrant

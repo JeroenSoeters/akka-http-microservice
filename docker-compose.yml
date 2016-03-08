@@ -1,0 +1,6 @@
+scala-microservice:
+  build: docker
+  hostname: localhost
+  restart: always
+  ports:
+    - "9000:9000"
