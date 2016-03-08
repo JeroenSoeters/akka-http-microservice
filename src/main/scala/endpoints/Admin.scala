@@ -3,21 +3,21 @@ package endpoints
 import akka.actor.ActorSystem
 import akka.event.{Logging, LoggingAdapter}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.marshalling.ToResponseMarshallable
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.server.Directives._
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.{Config, ConfigFactory}
 import spray.json.DefaultJsonProtocol
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.concurrent.ExecutionContextExecutor
 
-case class ServiceHealth(status: String)
+final case class ServiceHealth(status: String)
 
-trait Protocols extends DefaultJsonProtocol {
-  implicit val serviceHealthFormat = jsonFormat1(ServiceHealth.apply)
+trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
+  implicit val serviceHealthFormat = jsonFormat1(ServiceHealth)
 }
 
-trait Service extends Protocols {
+trait Service extends JsonSupport {
   implicit val system: ActorSystem
   implicit def executor: ExecutionContextExecutor
   implicit val materializer: Materializer
@@ -25,22 +25,16 @@ trait Service extends Protocols {
   def config: Config
   val logger: LoggingAdapter
 
-  def health: Future[ServiceHealth] =
-    Future.successful(ServiceHealth("healthy"))
+  def health(): ServiceHealth = ServiceHealth("healthy")
 
-  val routes = {
-    logRequestResult("scala-microservice") {
-      pathPrefix("health") {
-        get {
-          complete {
-            health.map[ToResponseMarshallable] {
-
-            }
-          }
+  val routes =
+    path("health") {
+      get {
+        complete {
+          health
         }
       }
     }
-  }
 }
 
 object ScalaMicroservice extends App with Service {

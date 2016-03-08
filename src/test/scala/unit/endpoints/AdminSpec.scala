@@ -4,7 +4,7 @@ import akka.event.NoLogging
 import akka.http.scaladsl.model.ContentTypes._
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import endpoints.Service
+import endpoints.{ServiceHealth, Service}
 import org.scalatest._
 
 class AdminSpec extends FlatSpec with Matchers with ScalatestRouteTest with Service {
@@ -17,7 +17,7 @@ class AdminSpec extends FlatSpec with Matchers with ScalatestRouteTest with Serv
     Get(s"/health") ~> routes ~> check {
       status shouldBe OK
       contentType shouldBe `application/json`
-      responseAs[String] should be("healthy")
+      responseAs[ServiceHealth] should be(ServiceHealth("healthy"))
     }
   }
 }
