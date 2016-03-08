@@ -1,6 +1,14 @@
 *.class
 *.log
 
+# bootstrap assets
+assets
+vol
+*.dmg
+*.zip
+*.tgz
+*.pkg
+
 # sbt specific
 .cache
 .history
