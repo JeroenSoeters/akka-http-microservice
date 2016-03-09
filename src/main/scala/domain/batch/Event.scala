@@ -3,7 +3,6 @@ package domain.batch
 import java.util.UUID
 
 import akka.http.scaladsl.model.DateTime
-import domain.BatchStatus
 
 sealed trait Event
 case class Created(id: UUID, sku: String, volume: Int, status: BatchStatus) extends Event
