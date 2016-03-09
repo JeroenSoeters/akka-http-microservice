@@ -1,17 +1,9 @@
-package domain
+package domain.batch
 
 import akka.http.scaladsl.model.DateTime
 import java.util.UUID
 
-sealed trait Event
-case class Created(id: UUID, sku: String, volume: Int, status: BatchStatus) extends Event
-case class Produced(id: UUID, produced: DateTime) extends Event
-case class QaApproved(id: UUID, approved: DateTime, by: String) extends Event
-
-sealed trait Command
-case class Create(id: UUID, sku: String, volume: Int) extends Command
-case class MarkAsProduced(id: UUID) extends Command
-case class MarkAsQaApproved(id: UUID) extends Command
+import domain.Aggregate
 
 sealed trait BatchStatus
 case object PreProduction extends BatchStatus
@@ -30,7 +22,7 @@ object Batch extends Aggregate[Batch, Event, Command] {
     }
   }
 
-  override def exec(batch: Batch, command: Command): Either[String, domain.Event] = {
+  override def exec(batch: Batch, command: Command): Either[String, Event] = {
     command match {
       case Create(id, sku, volume) => Right(Created(id, sku, volume, PreProduction))
       case MarkAsProduced(id) => Right(Produced(id, DateTime.now))
