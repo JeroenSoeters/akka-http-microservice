@@ -1,10 +1,11 @@
 package unit.endpoints
 
+import adapters.http.{Service, ServiceHealth}
 import akka.event.NoLogging
 import akka.http.scaladsl.model.ContentTypes._
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import endpoints.{ServiceHealth, Service}
+import endpoints.Service
 import org.scalatest._
 
 class AdminSpec extends FlatSpec with Matchers with ScalatestRouteTest with Service {

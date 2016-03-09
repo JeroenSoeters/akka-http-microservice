@@ -1,4 +1,4 @@
-package endpoints
+package adapters.http
 
 import akka.actor.ActorSystem
 import akka.event.{Logging, LoggingAdapter}
