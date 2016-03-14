@@ -1,6 +1,20 @@
-scala-microservice:
-  build: docker
-  hostname: localhost
-  restart: always
-  ports:
-    - "9000:9000"
+version: "2"
+services:
+  kafka:
+    image: pg/kafka
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    environment:
+      ADVERTISED_HOST: 192.168.99.100
+      ADVERTISED_PORT: "9092"
+  manufacturing-microservice:
+    build: docker
+    image: xplanning_manufacturing-service
+    container_name: manufacturing-service
+    hostname: localhost
+    restart: always
+    ports:
+      - "9000:9000"
+    depends_on:
+      - kafka

@@ -9,7 +9,9 @@ import domain.Aggregate
   */
 object CommandHandlers {
 
-  def makeHandler[TState, TEvent <: AnyRef, TCommand](aggregate: Aggregate[TState, TEvent, TCommand])(load: (Class[_], UUID) => Seq[AnyRef], commit: (UUID, Int, AnyRef) => Unit)(implicit ev: Manifest[TEvent]) =
+  def makeHandler[TState, TEvent <: AnyRef, TCommand](aggregate: Aggregate[TState, TEvent, TCommand])
+                                                     (load: (Class[_], UUID) => Seq[AnyRef],
+                                                      commit: (UUID, Int, AnyRef) => Unit)(implicit ev: Manifest[TEvent]) =
     (id: UUID, version: Int, command: TCommand) => {
       val events = load(ev.runtimeClass, id) map (_.asInstanceOf[TEvent])
       val state = events.foldLeft(aggregate.zero)(aggregate.apply)

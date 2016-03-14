@@ -10,5 +10,5 @@ object EventSourcing {
   val handleCommand = CommandHandlers.makeHandler(Batch)(
     (_, _) => Seq(Created(id, "sku1", 100, PreProduction), Produced(id, DateTime.now)),
     (id, version, event) => println(s"Storing event ${id} with version ${version}\n${event}"))
-  handleCommand(id, 0, MarkAsQaApproved(id))
+  handleCommand(id, 0, Approve(id))
 }

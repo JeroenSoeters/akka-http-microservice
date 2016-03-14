@@ -5,10 +5,11 @@ import java.util.UUID
 
 import domain.Aggregate
 
+
+
 sealed trait BatchStatus
 case object PreProduction extends BatchStatus
-case class AwaitingQa(produced: DateTime) extends BatchStatus
-case class Approved(approved: DateTime, by: String) extends BatchStatus
+case class QaRejected(by: String, when: DateTime) extends BatchStatus
 
 case class Batch(id: UUID, sku: String, volume: Int, status: BatchStatus)
 
@@ -17,16 +18,14 @@ object Batch extends Aggregate[Batch, Event, Command] {
   override def apply(batch: Batch, event: Event): Batch = {
     event match {
       case Created(id, sku, volume, status) => batch.copy(id, sku, volume, status)
-      case Produced(id, produced) => batch.copy(status = AwaitingQa(produced))
-      case QaApproved(id, approved, by) => batch.copy(status = Approved(approved, by))
+      case Rejected(id, by, when, _) => batch.copy(status = QaRejected(by, when))
     }
   }
 
   override def exec(batch: Batch, command: Command): Either[String, Event] = {
     command match {
       case Create(id, sku, volume) => Right(Created(id, sku, volume, PreProduction))
-      case MarkAsProduced(id) => Right(Produced(id, DateTime.now))
-      case MarkAsQaApproved(id) => Right(QaApproved(id, DateTime.now, "Jeroen"))
+      case Reject(id, by)          => Right(Rejected(id, by, DateTime.now, batch.volume))
     }
   }
 
